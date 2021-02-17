@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Photo Gallery</title>
+    <!-- https://google.github.io/material-design-icons/#icon-font-for-the-web -->
+    <!-- Using via Google Web Fonts -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <!-- https://tailwindcss.com/docs/installation -->
+    <!-- Using Tailwind via CDN -->
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+    <!-- https://v3.vuejs.org/guide/installation.html#release-notes -->
+    <!-- Vue CDN -->
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app" class="flex flex-col items-center ">
+        <p>Photo Gallery ({{ countTotal }})</p>
+        <p>Like Count ({{ countShow }}) </p>
+        <div class="flex w-96 h-10 mt-2 ">
+            <input v-show="showSearchBoxVar" v-model="searchText" type="text" placeholder="search picture"
+                class="bg-gray-200 text-gray-800 placeholder-gray-400  pl-2 py-1 w-96" />
+            <button v-show="!showSearchBoxVar" @click="showSearchBox" class="bg-gray-200 w-auto flex justify-end items-center">
+                <i class="material-icons">search</i>
+            </button>
+            <button v-show="showSearchBoxVar" @click="showSearchBoxCancel" class="bg-gray-200 w-auto flex justify-end items-center">
+                <p>Cancel</p>
+            </button>
+        </div>
+        <div v-if="search.length !==0" class="flex flex-row space-x-5" v-for="(picture,index) in search">
+            <div>
+                <button @dblclick="showFavIcon(index)">
+                    <img v-bind:src="picture.path" width="100" height="1000">
+                </button>
+            </div>
+
+            <div class="mt-10">
+                <p>{{ picture.description }}</p>
+            </div>
+
+            <span v-show="picture.showFav" style="color: red;" class="material-icons mt-10">
+                favorite
+            </span>
+        </div>
+        <div v-else>
+            <p>No Photo</p>
+        </div>
+    </div>
+
+    <!-- my main.js -->
+    <script src="./main.js"></script>
+</body>
