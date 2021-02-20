@@ -2,9 +2,9 @@ const app = {
     data() {
         return {
             pictures: [
-                { path: './images/1.jpeg', description: 'test1', showFav: false },
-                { path: './images/2.jpeg', description: 'test2', showFav: false },
-                { path: './images/3.jpeg', description: 'test3', showFav: false }
+                { path: './images/1.jpeg', description: 'test1', showFav: false, showModal: false},
+                { path: './images/2.jpeg', description: 'test2', showFav: false, showModal: false },
+                { path: './images/3.jpeg', description: 'test3', showFav: false, showModal: false }
             ],
             path: "./images/1.jpeg",
             showSearchBoxVar: false,
@@ -17,11 +17,11 @@ const app = {
         },
         showSearchBox() {
             this.showSearchBoxVar = !this.showSearchBoxVar;
-        },
-        showSearchBoxCancel() {
-            this.showSearchBoxVar = !this.showSearchBoxVar;
             this.searchText='';
-        }
+        },
+        toggleModal(index){
+            this.pictures[index].showModal = !this.pictures[index].showModal;
+          }
     },
     computed: {
         countTotal() {

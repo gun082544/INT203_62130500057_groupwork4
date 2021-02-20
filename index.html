@@ -23,33 +23,51 @@
         <div class="flex w-96 h-10 mt-2 ">
             <input v-show="showSearchBoxVar" v-model="searchText" type="text" placeholder="search picture"
                 class="bg-gray-200 text-gray-800 placeholder-gray-400  pl-2 py-1 w-96" />
-            <button v-show="!showSearchBoxVar" @click="showSearchBox" class="bg-gray-200 w-auto flex justify-end items-center">
+            <button v-show="!showSearchBoxVar" @click="showSearchBox"
+                class="bg-gray-200 w-auto flex justify-end items-center">
                 <i class="material-icons">search</i>
             </button>
-            <button v-show="showSearchBoxVar" @click="showSearchBoxCancel" class="bg-gray-200 w-auto flex justify-end items-center">
+            <button v-show="showSearchBoxVar" @click="showSearchBox"
+                class="bg-gray-200 w-auto flex justify-end items-center">
                 <p>Cancel</p>
             </button>
         </div>
-        <div v-if="search.length !==0" class="flex flex-row space-x-5" v-for="(picture,index) in search">
-            <div>
-                <button @dblclick="showFavIcon(index)">
-                    <img v-bind:src="picture.path" width="100" height="1000">
+        <div v-if="search.length !==0" v-for="(picture,index) in search">
+            <div class="flex flex-row space-x-5">
+                <div>
+                    <button @click="toggleModal(index)" @dblclick="showFavIcon(index)">
+                        <img v-bind:src="picture.path" width="100" height="1000">
+                    </button>
+                </div>
+
+                <div class="mt-10">
+                    <p>{{ picture.description }}</p>
+                </div>
+
+                <span v-show="picture.showFav" style="color: red;" class="material-icons mt-10">
+                    favorite
+                </span>
+
+            </div>
+            
+            <div v-show="picture.showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none flex flex-col bg-black bg-opacity-95">
+                <button @click="toggleModal(index)" class="material-icons orange bg-transparent w-8 h-8 block outline-none focus:outline-none fill-current">
+                    highlight_off
                 </button>
+                <!--body-->
+                <div class="relative p-6 flex-auto w-9/12 mx-auto">
+                    <img v-bind:src="picture.path">
+                </div>
             </div>
-
-            <div class="mt-10">
-                <p>{{ picture.description }}</p>
-            </div>
-
-            <span v-show="picture.showFav" style="color: red;" class="material-icons mt-10">
-                favorite
-            </span>
         </div>
-        <div v-else>
-            <p>No Photo</p>
-        </div>
+        <p v-else>No Photo</p>
+
     </div>
 
     <!-- my main.js -->
     <script src="./main.js"></script>
 </body>
+<style>
+    .material-icons.orange { color: #FB8C00; }
+</style>
+</html>
